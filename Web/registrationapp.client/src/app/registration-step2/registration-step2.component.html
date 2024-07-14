@@ -1,0 +1,27 @@
+<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="selectedCountry">Country</label>
+    <select id="selectedCountry" formControlName="selectedCountry" (change)="onCountryChange()">
+      <option *ngFor="let country of countries" [value]="country.id">{{ country.name }}</option>
+    </select>
+    <div *ngIf="registrationForm.get('selectedCountry')?.invalid && registrationForm.get('selectedCountry')?.touched">
+      <small *ngIf="registrationForm.get('selectedCountry')?.errors?.['required']">Country is required.</small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="selectedProvince">Province</label>
+    <select id="selectedProvince" formControlName="selectedProvince">
+      <option *ngFor="let province of provinces" [value]="province.name">{{ province.name }}</option>
+    </select>
+    <div *ngIf="registrationForm.get('selectedProvince')?.invalid && registrationForm.get('selectedProvince')?.touched">
+      <small *ngIf="registrationForm.get('selectedProvince')?.errors?.['required']">Province is required.</small>
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="registrationForm.invalid || isSubmitted">Submit</button>
+</form>
+
+<div *ngIf="isSubmitted" class="alert alert-success" role="alert">
+  The form has been successfully submitted.
+</div>

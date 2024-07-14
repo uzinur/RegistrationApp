@@ -1,0 +1,51 @@
+<form [formGroup]="registrationForm" (ngSubmit)="onNext()">
+  <fieldset>
+    <legend>Registration Step 1</legend>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" formControlName="email">
+      <div *ngIf="registrationForm.get('email')?.pending">Uniqueness Check...</div>
+      <div *ngIf="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched">
+        <small *ngIf="registrationForm.get('email')?.errors?.['required']">Email is required.</small>
+        <small *ngIf="registrationForm.get('email')?.errors?.['email']">Invalid email address.</small>
+        <small *ngIf="registrationForm.get('email')?.errors?.['emailExists']">Email already exists.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" formControlName="password">
+      <div *ngIf="registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched">
+        <small *ngIf="registrationForm.get('password')?.errors?.['required']">Password is required.</small>
+        <small *ngIf="registrationForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</small>
+        <small *ngIf="registrationForm.get('password')?.errors?.['passwordIsWeak']">
+          Password must contain at least one letter and one digit.
+        </small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" formControlName="confirmPassword">
+      <div *ngIf="registrationForm.get('confirmPassword')?.invalid && registrationForm.get('confirmPassword')?.touched">
+        <small *ngIf="registrationForm.get('confirmPassword')?.errors?.['required']">Confirm Password is required.</small>
+      </div>
+      <div *ngIf="registrationForm.errors?.['mismatch'] && (registrationForm.get('confirmPassword')?.touched || registrationForm.get('password')?.touched)">
+        <small>Passwords do not match.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>
+        <input type="checkbox" formControlName="isAgree">
+        I agree to the terms and conditions
+      </label>
+      <div *ngIf="registrationForm.get('isAgree')?.invalid && registrationForm.get('isAgree')?.touched">
+        <small *ngIf="registrationForm.get('isAgree')?.errors?.['required']">You must agree to the terms and conditions.</small>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="registrationForm.invalid">Next</button>
+  </fieldset>
+</form>

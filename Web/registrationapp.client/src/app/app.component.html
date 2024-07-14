@@ -1,0 +1,15 @@
+<h1 id="tableLabel">Registration</h1>
+
+<ng-container *ngIf="currentStep === 1">
+  <app-registration-step1 (userUpdate)="onUserUpdate($event)"
+                          (nextStep)="goToStep(2)">
+  </app-registration-step1>
+</ng-container>
+
+<ng-container *ngIf="currentStep === 2">
+  <app-registration-step2 [user]="user"
+                          [isSubmitted]="isSubmitted"
+                          (userUpdate)="onUserUpdate($event)"
+                          (submitRegistration)="onSubmit()">
+  </app-registration-step2>
+</ng-container>
